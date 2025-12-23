@@ -29,8 +29,10 @@ infra/            # Terraform configuration
      -var="docker_host=ssh://michael@192.168.86.38" \
      -var="cs2_gslt=YOUR_STEAM_TOKEN" \
      -var="enable_portainer=true" \
+     -var="enable_ollama=true" \
      -var="enable_cs2=true" \
-     -var="enable_ollama=false"
+     -var="enable_ark=true" \
+     -var="enable_rust=true"
    ```
 
    **Note:** replace `192.168.86.38` with your actual server IP.
