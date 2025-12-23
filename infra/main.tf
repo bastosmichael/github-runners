@@ -74,7 +74,7 @@ resource "null_resource" "deploy_stacks" {
         # Ensure directories exist (in case bootstrap didn't run or new ones matched)
         sudo mkdir -p /opt/portainer /opt/ollama /opt/rust-server /opt/ark /opt/cs2 /opt/minecraft /opt/plex
         sudo mkdir -p /opt/cs2/data /opt/plex/media
-        sudo chown -R 1000:1000 /opt/cs2/data || true
+        sudo chown -R 1000:1000 /opt/cs2/data /opt/ark /opt/plex /opt/portainer /opt/ollama /opt/rust-server /opt/minecraft || true
 
         # Move files to correct locations
         sudo mv /tmp/portainer.docker-compose.yml /opt/portainer/docker-compose.yml
