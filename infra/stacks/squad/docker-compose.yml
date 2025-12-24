@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   squad-server:
-    image: wolveix/squad-server:latest
+    image: cm2network/squad
     container_name: squad-server
     restart: unless-stopped
     ports:
