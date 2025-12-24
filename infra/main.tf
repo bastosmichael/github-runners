@@ -133,6 +133,46 @@ resource "null_resource" "deploy_stacks" {
           /opt/tf2 /opt/garrysmod /opt/insurgency-sandstorm /opt/squad /opt/squad44 /opt/satisfactory /opt/factorio /opt/eco \
           /opt/space-engineers /opt/starbound /opt/aoe2de /opt/palworld /opt/arma3 || true
 
+        # Configure Firewall (UFW)
+        echo "Configuring Firewall..."
+        sudo ufw allow 22/tcp  # SSH
+        sudo ufw allow 8000/tcp # Portainer
+        sudo ufw allow 9000/tcp # Portainer
+        sudo ufw allow 11434/tcp # Ollama
+        sudo ufw allow 32400/tcp # Plex
+        sudo ufw allow 28015:28016/udp # Rust
+        sudo ufw allow 28015:28016/tcp # Rust RCON
+        sudo ufw allow 7777:7778/udp # Ark
+        sudo ufw allow 27015/udp     # CS2 / Ark Query
+        sudo ufw allow 27015/tcp     # CS2 RCON
+        sudo ufw allow 25565/tcp     # Minecraft
+        sudo ufw allow 27017/udp     # TF2
+        sudo ufw allow 27017/tcp     # TF2 RCON
+        sudo ufw allow 27008/udp     # Garry's Mod
+        sudo ufw allow 27018/udp     # Garry's Mod
+        sudo ufw allow 27102/udp     # Insurgency: Sandstorm
+        sudo ufw allow 27131/udp     # Insurgency: Sandstorm
+        sudo ufw allow 7787/udp      # Squad
+        sudo ufw allow 27165/udp     # Squad
+        sudo ufw allow 27165/tcp     # Squad RCON
+        sudo ufw allow 10027/udp     # Squad 44
+        sudo ufw allow 10037/udp     # Squad 44
+        sudo ufw allow 15000/udp     # Satisfactory
+        sudo ufw allow 15777/udp     # Satisfactory
+        sudo ufw allow 7779/udp      # Satisfactory (Mapped)
+        sudo ufw allow 34197/udp     # Factorio
+        sudo ufw allow 27022/tcp     # Factorio RCON
+        sudo ufw allow 3010/tcp      # Eco
+        sudo ufw allow 3011/udp      # Eco
+        sudo ufw allow 27019/udp     # Space Engineers
+        sudo ufw allow 8766/udp      # Space Engineers
+        sudo ufw allow 21025/tcp     # Starbound
+        sudo ufw allow 27020:27021/udp # AoE2 DE
+        sudo ufw allow 8211/udp      # Palworld
+        sudo ufw allow 27023/udp     # Palworld
+        sudo ufw allow 2302:2306/udp # Arma 3
+        sudo ufw --force enable || true
+
         # Move files to correct locations
         sudo mv /tmp/portainer.docker-compose.yml /opt/portainer/docker-compose.yml
         sudo mv /tmp/ollama.docker-compose.yml /opt/ollama/docker-compose.yml
