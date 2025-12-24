@@ -33,6 +33,31 @@ output "plex_url" {
   value       = var.enable_plex ? "http://localhost:32400/web" : "Plex not enabled"
 }
 
+output "jellyfin_url" {
+  description = "URL to access Jellyfin"
+  value       = var.enable_jellyfin ? "http://localhost:8096" : "Jellyfin not enabled"
+}
+
+output "immich_url" {
+  description = "URL to access Immich"
+  value       = var.enable_immich ? "http://localhost:2283" : "Immich not enabled"
+}
+
+output "navidrome_url" {
+  description = "URL to access Navidrome"
+  value       = var.enable_navidrome ? "http://localhost:4533" : "Navidrome not enabled"
+}
+
+output "audiobookshelf_url" {
+  description = "URL to access Audiobookshelf"
+  value       = var.enable_audiobookshelf ? "http://localhost:13378" : "Audiobookshelf not enabled"
+}
+
+output "nextcloud_url" {
+  description = "URL to access Nextcloud"
+  value       = var.enable_nextcloud ? "http://localhost:8080" : "Nextcloud not enabled"
+}
+
 output "tf2_server_port" {
   description = "Team Fortress 2 server connection port"
   value       = var.enable_tf2 ? "27015" : "TF2 server not enabled"
@@ -108,6 +133,11 @@ output "deployed_stacks" {
     var.enable_cs2 ? ["cs2"] : [],
     var.enable_minecraft ? ["minecraft"] : [],
     var.enable_plex ? ["plex"] : [],
+    var.enable_jellyfin ? ["jellyfin"] : [],
+    var.enable_immich ? ["immich"] : [],
+    var.enable_navidrome ? ["navidrome"] : [],
+    var.enable_audiobookshelf ? ["audiobookshelf"] : [],
+    var.enable_nextcloud ? ["nextcloud"] : [],
     var.enable_tf2 ? ["tf2"] : [],
     var.enable_garrysmod ? ["garrysmod"] : [],
     var.enable_insurgency_sandstorm ? ["insurgency_sandstorm"] : [],
