@@ -2,15 +2,13 @@ version: '3.8'
 
 services:
   aoe2de-server:
-    image: ich777/ageofempires2de:latest
+    image: cm2network/steamcmd
     container_name: aoe2de-server
     restart: unless-stopped
     ports:
       - "27020:27015/udp"
       - "27021:27016/udp"
-    environment:
-      - GAME_PORT=27020
-      - QUERY_PORT=27021
+    command: [ "tail", "-f", "/dev/null" ] # Placeholder until a valid Wine image is found
     volumes:
       - aoe2de_data:/serverdata
 

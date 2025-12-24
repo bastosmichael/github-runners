@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   space-engineers-server:
-    image: mmmaxwwwell/se-dedicated-server:latest
+    image: devidian/spaceengineers:latest
     container_name: space-engineers-server
     restart: unless-stopped
     ports:
@@ -10,8 +10,9 @@ services:
       - "8766:8766/udp"
     environment:
       - INSTANCE_NAME=Space Engineers
+      - SEP_PORT=27016
     volumes:
-      - space_engineers_data:/appdata/SpaceEngineersDedicated
+      - space_engineers_data:/appdata/space-engineers
 
 volumes:
   space_engineers_data:
