@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   arma3-server:
-    image: brettmayson/arma3server:latest
+    image: ghcr.io/gameservermanagers/gameserver:arma3
     container_name: arma3-server
     restart: unless-stopped
     ports:
@@ -10,13 +10,13 @@ services:
       - "2303:2303/udp"
       - "2304:2304/udp"
       - "2305:2305/udp"
+      - "2306:2306/udp"
     environment:
-      - ARMA_BINARY=./arma3server
-      - MODS_PRESET=
-      - STEAM_USER=
-      - STEAM_PASSWORD=
+      - POST_INSTALL_CHOWN=true
+      - PUID=1000
+      - PGID=1000
     volumes:
-      - arma3_data:/home/steam/arma3
+      - arma3_data:/home/linuxgsm/serverfiles
 
 volumes:
   arma3_data:
