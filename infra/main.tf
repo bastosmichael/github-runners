@@ -103,6 +103,24 @@ resource "null_resource" "deploy_stacks" {
           return 0
         }
 
+        # Helper to validate container health before pausing
+        function check_and_pause {
+          local container_name=$1
+          echo "Waiting 60s for $container_name to initialize..."
+          sleep 60
+          
+          # Check if container is currently running (not exited/restarting)
+          if sudo docker ps --filter "name=$container_name" --filter "status=running" --format "{{.Names}}" | grep -q "^$container_name$"; then
+            echo "SUCCESS: $container_name is healthy and running. Pausing now to save RAM..."
+            sudo docker compose pause
+          else
+            echo "ERROR: $container_name is NOT running after start-up period. It may have crashed."
+            echo "Recent logs for $container_name:"
+            sudo docker logs --tail 20 "$container_name" || true
+            # We do NOT pause if it's broken, so valid logs are preserved/visible in Portainer
+          fi
+        }
+
         # Restart DNS resolver to fix "server misbehaving" errors
         sudo systemctl restart systemd-resolved || true
         
@@ -144,24 +162,24 @@ resource "null_resource" "deploy_stacks" {
         # Deploy Stacks
         ${var.enable_portainer ? "cd /opt/portainer && (sudo docker rm -f portainer || true) && retry sudo docker compose up -d" : "echo 'Skipping Portainer'"}
         ${var.enable_ollama ? "cd /opt/ollama && (sudo docker rm -f ollama || true) && retry sudo docker compose up -d && sleep 10 && retry sudo docker exec ollama ollama pull tinyllama && retry sudo docker exec ollama ollama pull starcoder:1b" : "echo 'Skipping Ollama'"}
-        ${var.enable_rust ? "cd /opt/rust-server && (sudo docker rm -f rust-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping Rust'"}
-        ${var.enable_ark ? "cd /opt/ark && (sudo docker rm -f ark-server ark_server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping ARK'"}
-        ${var.enable_cs2 ? "cd /opt/cs2 && (sudo docker rm -f cs2-server cs2_server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping CS2'"}
-        ${var.enable_minecraft ? "cd /opt/minecraft && (sudo docker rm -f minecraft-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping Minecraft'"}
+        ${var.enable_rust ? "cd /opt/rust-server && (sudo docker rm -f rust-server || true) && retry sudo docker compose up -d && check_and_pause rust-server" : "echo 'Skipping Rust'"}
+        ${var.enable_ark ? "cd /opt/ark && (sudo docker rm -f ark-server ark_server || true) && retry sudo docker compose up -d && check_and_pause ark-server" : "echo 'Skipping ARK'"}
+        ${var.enable_cs2 ? "cd /opt/cs2 && (sudo docker rm -f cs2-server cs2_server || true) && retry sudo docker compose up -d && check_and_pause cs2-server" : "echo 'Skipping CS2'"}
+        ${var.enable_minecraft ? "cd /opt/minecraft && (sudo docker rm -f minecraft-server || true) && retry sudo docker compose up -d && check_and_pause minecraft-server" : "echo 'Skipping Minecraft'"}
         ${var.enable_plex ? "cd /opt/plex && (sudo docker rm -f plex || true) && retry sudo docker compose up -d" : "echo 'Skipping Plex'"}
-        ${var.enable_tf2 ? "cd /opt/tf2 && (sudo docker rm -f tf2-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping TF2'"}
-        ${var.enable_garrysmod ? "cd /opt/garrysmod && (sudo docker rm -f garrysmod-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo \"Skipping Garry's Mod\""}
-        ${var.enable_insurgency_sandstorm ? "cd /opt/insurgency-sandstorm && (sudo docker rm -f insurgency-sandstorm-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping Insurgency: Sandstorm'"}
-        ${var.enable_squad ? "cd /opt/squad && (sudo docker rm -f squad-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping Squad'"}
-        ${var.enable_squad44 ? "cd /opt/squad44 && (sudo docker rm -f squad44-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping Squad 44'"}
-        ${var.enable_satisfactory ? "cd /opt/satisfactory && (sudo docker rm -f satisfactory-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping Satisfactory'"}
-        ${var.enable_factorio ? "cd /opt/factorio && (sudo docker rm -f factorio-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping Factorio'"}
-        ${var.enable_eco ? "cd /opt/eco && (sudo docker rm -f eco-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping Eco'"}
-        ${var.enable_space_engineers ? "cd /opt/space-engineers && (sudo docker rm -f space-engineers-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping Space Engineers'"}
-        ${var.enable_starbound ? "cd /opt/starbound && (sudo docker rm -f starbound-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping Starbound'"}
-        ${var.enable_aoe2de ? "cd /opt/aoe2de && (sudo docker rm -f aoe2de-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping Age of Empires II: DE'"}
-        ${var.enable_palworld ? "cd /opt/palworld && (sudo docker rm -f palworld-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping Palworld'"}
-        ${var.enable_arma3 ? "cd /opt/arma3 && (sudo docker rm -f arma3-server || true) && retry sudo docker compose up -d && sleep 30 && sudo docker compose pause" : "echo 'Skipping Arma 3'"}
+        ${var.enable_tf2 ? "cd /opt/tf2 && (sudo docker rm -f tf2-server || true) && retry sudo docker compose up -d && check_and_pause tf2-server" : "echo 'Skipping TF2'"}
+        ${var.enable_garrysmod ? "cd /opt/garrysmod && (sudo docker rm -f garrysmod-server || true) && retry sudo docker compose up -d && check_and_pause garrysmod-server" : "echo \"Skipping Garry's Mod\""}
+        ${var.enable_insurgency_sandstorm ? "cd /opt/insurgency-sandstorm && (sudo docker rm -f insurgency-sandstorm-server || true) && retry sudo docker compose up -d && check_and_pause insurgency-sandstorm-server" : "echo 'Skipping Insurgency: Sandstorm'"}
+        ${var.enable_squad ? "cd /opt/squad && (sudo docker rm -f squad-server || true) && retry sudo docker compose up -d && check_and_pause squad-server" : "echo 'Skipping Squad'"}
+        ${var.enable_squad44 ? "cd /opt/squad44 && (sudo docker rm -f squad44-server || true) && retry sudo docker compose up -d && check_and_pause squad44-server" : "echo 'Skipping Squad 44'"}
+        ${var.enable_satisfactory ? "cd /opt/satisfactory && (sudo docker rm -f satisfactory-server || true) && retry sudo docker compose up -d && check_and_pause satisfactory-server" : "echo 'Skipping Satisfactory'"}
+        ${var.enable_factorio ? "cd /opt/factorio && (sudo docker rm -f factorio-server || true) && retry sudo docker compose up -d && check_and_pause factorio-server" : "echo 'Skipping Factorio'"}
+        ${var.enable_eco ? "cd /opt/eco && (sudo docker rm -f eco-server || true) && retry sudo docker compose up -d && check_and_pause eco-server" : "echo 'Skipping Eco'"}
+        ${var.enable_space_engineers ? "cd /opt/space-engineers && (sudo docker rm -f space-engineers-server || true) && retry sudo docker compose up -d && check_and_pause space-engineers-server" : "echo 'Skipping Space Engineers'"}
+        ${var.enable_starbound ? "cd /opt/starbound && (sudo docker rm -f starbound-server || true) && retry sudo docker compose up -d && check_and_pause starbound-server" : "echo 'Skipping Starbound'"}
+        ${var.enable_aoe2de ? "cd /opt/aoe2de && (sudo docker rm -f aoe2de-server || true) && retry sudo docker compose up -d && check_and_pause aoe2de-server" : "echo 'Skipping Age of Empires II: DE'"}
+        ${var.enable_palworld ? "cd /opt/palworld && (sudo docker rm -f palworld-server || true) && retry sudo docker compose up -d && check_and_pause palworld-server" : "echo 'Skipping Palworld'"}
+        ${var.enable_arma3 ? "cd /opt/arma3 && (sudo docker rm -f arma3-server || true) && retry sudo docker compose up -d && check_and_pause arma3-server" : "echo 'Skipping Arma 3'"}
 REMOTE_SCRIPT
     EOT
   }
