@@ -6,8 +6,9 @@ services:
     container_name: rust-server
     restart: unless-stopped
     ports:
-      - "28015:28015"
-      - "28016:28016"
+      - "28015:28015/udp"
+      - "28015:28015/tcp"
+      - "28016:28016/tcp"
     environment:
       - RUST_SERVER_STARTUP_ARGUMENTS=-batchmode -nographics -load +server.secure 1
       - RUST_SERVER_IDENTITY=docker
