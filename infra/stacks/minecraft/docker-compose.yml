@@ -10,6 +10,8 @@ services:
     environment:
       - EULA=TRUE
       - VERSION=LATEST
+      - DIFFICULTY=normal
+      - SPAWN_MONSTERS=false
     volumes:
       - minecraft_data:/data
 
