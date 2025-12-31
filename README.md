@@ -49,7 +49,7 @@ infra/            # Terraform configuration
      -var="enable_influxdb=true" \
      -var="enable_prometheus=true" \
      -var="enable_nextcloud=true"
-  ```
+   ```
 
    **Note:** replace `192.168.86.38` with your actual server IP.
 
