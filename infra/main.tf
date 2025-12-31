@@ -40,9 +40,9 @@ resource "null_resource" "bootstrap_docker" {
       # "sudo usermod -aG docker $USER || true",
 
       # Create stack dirs
-      "sudo mkdir -p /opt/portainer /opt/plex /opt/jellyfin /opt/immich /opt/navidrome /opt/audiobookshelf /opt/nextcloud",
-      "sudo mkdir -p /opt/plex/media /opt/jellyfin/cache /opt/jellyfin/media /opt/immich/library /opt/navidrome/music /opt/audiobookshelf/audiobooks /opt/audiobookshelf/podcasts /opt/nextcloud/html",
-      "sudo chown -R 1000:1000 /opt/plex /opt/portainer /opt/jellyfin /opt/immich /opt/navidrome /opt/audiobookshelf /opt/nextcloud || true",
+      "sudo mkdir -p /opt/portainer /opt/plex /opt/jellyfin /opt/immich /opt/navidrome /opt/audiobookshelf /opt/nextcloud /opt/nginxproxymanager /opt/startpage /opt/vaultwarden /opt/hoarder /opt/docmost /opt/octoprint /opt/arrfiles /opt/tautulli /opt/overseerr /opt/radarr /opt/sonarr /opt/lidarr /opt/bazarr /opt/prowlarr /opt/qbittorrent /opt/nzbget /opt/homeassistant /opt/zigbee2mqtt /opt/frigate /opt/grafana /opt/influxdb /opt/prometheus /opt/media",
+      "sudo mkdir -p /opt/plex/media /opt/jellyfin/cache /opt/jellyfin/media /opt/immich/library /opt/navidrome/music /opt/audiobookshelf/audiobooks /opt/audiobookshelf/podcasts /opt/nextcloud/html /opt/nginxproxymanager/data /opt/nginxproxymanager/letsencrypt /opt/startpage/config /opt/vaultwarden/data /opt/hoarder/data /opt/docmost/uploads /opt/docmost/db /opt/octoprint/config /opt/arrfiles/config /opt/arrfiles/database /opt/tautulli/config /opt/overseerr/config /opt/radarr/config /opt/sonarr/config /opt/lidarr/config /opt/bazarr/config /opt/prowlarr/config /opt/qbittorrent/config /opt/media/downloads /opt/nzbget/config /opt/homeassistant/config /opt/zigbee2mqtt/data /opt/frigate/config /opt/frigate/cache /opt/grafana/data /opt/influxdb/data /opt/prometheus/data",
+      "sudo chown -R 1000:1000 /opt/plex /opt/portainer /opt/jellyfin /opt/immich /opt/navidrome /opt/audiobookshelf /opt/nextcloud /opt/nginxproxymanager /opt/startpage /opt/vaultwarden /opt/hoarder /opt/docmost /opt/octoprint /opt/arrfiles /opt/tautulli /opt/overseerr /opt/radarr /opt/sonarr /opt/lidarr /opt/bazarr /opt/prowlarr /opt/qbittorrent /opt/nzbget /opt/homeassistant /opt/zigbee2mqtt /opt/frigate /opt/grafana /opt/influxdb /opt/prometheus /opt/media || true",
     ]
   }
 }
@@ -65,6 +65,28 @@ resource "null_resource" "deploy_stacks" {
       scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/navidrome/docker-compose.yml" "$USER@$HOST:/tmp/navidrome.docker-compose.yml"
       scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/audiobookshelf/docker-compose.yml" "$USER@$HOST:/tmp/audiobookshelf.docker-compose.yml"
       scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/nextcloud/docker-compose.yml" "$USER@$HOST:/tmp/nextcloud.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/nginxproxymanager/docker-compose.yml" "$USER@$HOST:/tmp/nginxproxymanager.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/startpage/docker-compose.yml" "$USER@$HOST:/tmp/startpage.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/vaultwarden/docker-compose.yml" "$USER@$HOST:/tmp/vaultwarden.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/hoarder/docker-compose.yml" "$USER@$HOST:/tmp/hoarder.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/docmost/docker-compose.yml" "$USER@$HOST:/tmp/docmost.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/octoprint/docker-compose.yml" "$USER@$HOST:/tmp/octoprint.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/arrfiles/docker-compose.yml" "$USER@$HOST:/tmp/arrfiles.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/tautulli/docker-compose.yml" "$USER@$HOST:/tmp/tautulli.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/overseerr/docker-compose.yml" "$USER@$HOST:/tmp/overseerr.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/radarr/docker-compose.yml" "$USER@$HOST:/tmp/radarr.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/sonarr/docker-compose.yml" "$USER@$HOST:/tmp/sonarr.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/lidarr/docker-compose.yml" "$USER@$HOST:/tmp/lidarr.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/bazarr/docker-compose.yml" "$USER@$HOST:/tmp/bazarr.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/prowlarr/docker-compose.yml" "$USER@$HOST:/tmp/prowlarr.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/qbittorrent/docker-compose.yml" "$USER@$HOST:/tmp/qbittorrent.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/nzbget/docker-compose.yml" "$USER@$HOST:/tmp/nzbget.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/homeassistant/docker-compose.yml" "$USER@$HOST:/tmp/homeassistant.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/zigbee2mqtt/docker-compose.yml" "$USER@$HOST:/tmp/zigbee2mqtt.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/frigate/docker-compose.yml" "$USER@$HOST:/tmp/frigate.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/grafana/docker-compose.yml" "$USER@$HOST:/tmp/grafana.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/influxdb/docker-compose.yml" "$USER@$HOST:/tmp/influxdb.docker-compose.yml"
+      scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "${path.module}/stacks/prometheus/docker-compose.yml" "$USER@$HOST:/tmp/prometheus.docker-compose.yml"
 
       # Execute Remote Setup via SSH
       ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$USER@$HOST" 'bash -s' <<'REMOTE_SCRIPT'
@@ -93,18 +115,21 @@ resource "null_resource" "deploy_stacks" {
         sudo systemctl restart systemd-resolved || true
 
         # Ensure directories exist (in case bootstrap didn't run or new ones matched)
-        sudo mkdir -p /opt/portainer /opt/plex /opt/jellyfin /opt/immich /opt/navidrome /opt/audiobookshelf /opt/nextcloud
-        sudo mkdir -p /opt/plex/media /opt/jellyfin/cache /opt/jellyfin/media /opt/immich/library /opt/navidrome/music /opt/audiobookshelf/audiobooks /opt/audiobookshelf/podcasts /opt/nextcloud/html
-        sudo chown -R 1000:1000 /opt/plex /opt/portainer /opt/jellyfin /opt/immich /opt/navidrome /opt/audiobookshelf /opt/nextcloud || true
+        sudo mkdir -p /opt/portainer /opt/plex /opt/jellyfin /opt/immich /opt/navidrome /opt/audiobookshelf /opt/nextcloud /opt/nginxproxymanager /opt/startpage /opt/vaultwarden /opt/hoarder /opt/docmost /opt/octoprint /opt/arrfiles /opt/tautulli /opt/overseerr /opt/radarr /opt/sonarr /opt/lidarr /opt/bazarr /opt/prowlarr /opt/qbittorrent /opt/nzbget /opt/homeassistant /opt/zigbee2mqtt /opt/frigate /opt/grafana /opt/influxdb /opt/prometheus /opt/media
+        sudo mkdir -p /opt/plex/media /opt/jellyfin/cache /opt/jellyfin/media /opt/immich/library /opt/navidrome/music /opt/audiobookshelf/audiobooks /opt/audiobookshelf/podcasts /opt/nextcloud/html /opt/nginxproxymanager/data /opt/nginxproxymanager/letsencrypt /opt/startpage/config /opt/vaultwarden/data /opt/hoarder/data /opt/docmost/uploads /opt/docmost/db /opt/octoprint/config /opt/arrfiles/config /opt/arrfiles/database /opt/tautulli/config /opt/overseerr/config /opt/radarr/config /opt/sonarr/config /opt/lidarr/config /opt/bazarr/config /opt/prowlarr/config /opt/qbittorrent/config /opt/media/downloads /opt/nzbget/config /opt/homeassistant/config /opt/zigbee2mqtt/data /opt/frigate/config /opt/frigate/cache /opt/grafana/data /opt/influxdb/data /opt/prometheus/data
+        sudo chown -R 1000:1000 /opt/plex /opt/portainer /opt/jellyfin /opt/immich /opt/navidrome /opt/audiobookshelf /opt/nextcloud /opt/nginxproxymanager /opt/startpage /opt/vaultwarden /opt/hoarder /opt/docmost /opt/octoprint /opt/arrfiles /opt/tautulli /opt/overseerr /opt/radarr /opt/sonarr /opt/lidarr /opt/bazarr /opt/prowlarr /opt/qbittorrent /opt/nzbget /opt/homeassistant /opt/zigbee2mqtt /opt/frigate /opt/grafana /opt/influxdb /opt/prometheus /opt/media || true
 
         # Configure Firewall (UFW)
         echo "Configuring Firewall..."
         sudo ufw allow 22/tcp  # SSH
         sudo ufw allow 80/tcp  # HTTP (reverse proxies / direct web access)
         sudo ufw allow 443/tcp # HTTPS (reverse proxies / direct web access)
+        sudo ufw allow 81/tcp  # Nginx Proxy Manager admin
         sudo ufw allow 8000/tcp # Portainer
         sudo ufw allow 9000/tcp # Portainer
         sudo ufw allow 3000/tcp # Open WebUI / dashboards
+        sudo ufw allow 3002/tcp # Docmost
+        sudo ufw allow 3005/tcp # Hoarder
         sudo ufw allow 32400/tcp # Plex
         sudo ufw allow 8096/tcp  # Jellyfin
         sudo ufw allow 8920/tcp  # Jellyfin HTTPS
@@ -112,6 +137,27 @@ resource "null_resource" "deploy_stacks" {
         sudo ufw allow 4533/tcp  # Navidrome
         sudo ufw allow 13378/tcp # Audiobookshelf
         sudo ufw allow 8080/tcp  # Nextcloud
+        sudo ufw allow 3012/tcp # Vaultwarden WS
+        sudo ufw allow 5000/tcp # OctoPrint
+        sudo ufw allow 5055/tcp # Overseerr
+        sudo ufw allow 6767/tcp # Bazarr
+        sudo ufw allow 6789/tcp # NZBGet
+        sudo ufw allow 6881/tcp # qBittorrent
+        sudo ufw allow 6881/udp # qBittorrent UDP
+        sudo ufw allow 7878/tcp # Radarr
+        sudo ufw allow 8082/tcp # Vaultwarden HTTP
+        sudo ufw allow 8085/tcp # qBittorrent WebUI
+        sudo ufw allow 8181/tcp # Tautulli
+        sudo ufw allow 8686/tcp # Lidarr
+        sudo ufw allow 8989/tcp # Sonarr
+        sudo ufw allow 9696/tcp # Prowlarr
+        sudo ufw allow 8088/tcp # Arrfiles
+        sudo ufw allow 8123/tcp # Home Assistant
+        sudo ufw allow 8081/tcp # Zigbee2MQTT
+        sudo ufw allow 8971/tcp # Frigate UI
+        sudo ufw allow 3001/tcp # Grafana
+        sudo ufw allow 8086/tcp # InfluxDB
+        sudo ufw allow 9090/tcp # Prometheus
         sudo ufw --force enable || true
 
         # Move files to correct locations
@@ -122,6 +168,28 @@ resource "null_resource" "deploy_stacks" {
         sudo mv /tmp/navidrome.docker-compose.yml /opt/navidrome/docker-compose.yml
         sudo mv /tmp/audiobookshelf.docker-compose.yml /opt/audiobookshelf/docker-compose.yml
         sudo mv /tmp/nextcloud.docker-compose.yml /opt/nextcloud/docker-compose.yml
+        sudo mv /tmp/nginxproxymanager.docker-compose.yml /opt/nginxproxymanager/docker-compose.yml
+        sudo mv /tmp/startpage.docker-compose.yml /opt/startpage/docker-compose.yml
+        sudo mv /tmp/vaultwarden.docker-compose.yml /opt/vaultwarden/docker-compose.yml
+        sudo mv /tmp/hoarder.docker-compose.yml /opt/hoarder/docker-compose.yml
+        sudo mv /tmp/docmost.docker-compose.yml /opt/docmost/docker-compose.yml
+        sudo mv /tmp/octoprint.docker-compose.yml /opt/octoprint/docker-compose.yml
+        sudo mv /tmp/arrfiles.docker-compose.yml /opt/arrfiles/docker-compose.yml
+        sudo mv /tmp/tautulli.docker-compose.yml /opt/tautulli/docker-compose.yml
+        sudo mv /tmp/overseerr.docker-compose.yml /opt/overseerr/docker-compose.yml
+        sudo mv /tmp/radarr.docker-compose.yml /opt/radarr/docker-compose.yml
+        sudo mv /tmp/sonarr.docker-compose.yml /opt/sonarr/docker-compose.yml
+        sudo mv /tmp/lidarr.docker-compose.yml /opt/lidarr/docker-compose.yml
+        sudo mv /tmp/bazarr.docker-compose.yml /opt/bazarr/docker-compose.yml
+        sudo mv /tmp/prowlarr.docker-compose.yml /opt/prowlarr/docker-compose.yml
+        sudo mv /tmp/qbittorrent.docker-compose.yml /opt/qbittorrent/docker-compose.yml
+        sudo mv /tmp/nzbget.docker-compose.yml /opt/nzbget/docker-compose.yml
+        sudo mv /tmp/homeassistant.docker-compose.yml /opt/homeassistant/docker-compose.yml
+        sudo mv /tmp/zigbee2mqtt.docker-compose.yml /opt/zigbee2mqtt/docker-compose.yml
+        sudo mv /tmp/frigate.docker-compose.yml /opt/frigate/docker-compose.yml
+        sudo mv /tmp/grafana.docker-compose.yml /opt/grafana/docker-compose.yml
+        sudo mv /tmp/influxdb.docker-compose.yml /opt/influxdb/docker-compose.yml
+        sudo mv /tmp/prometheus.docker-compose.yml /opt/prometheus/docker-compose.yml
 
         # Configure Plex Media Storage
         if [ -d "/mnt/coldstore" ]; then
@@ -167,6 +235,16 @@ resource "null_resource" "deploy_stacks" {
             echo "No coldstore detected. Keeping default /opt/nextcloud/html."
         fi
 
+        if [ -d "/mnt/coldstore" ]; then
+            echo "Coldstore detected. Pointing shared media to /mnt/coldstore/media..."
+            sudo mkdir -p /mnt/coldstore/media /mnt/coldstore/downloads
+            sudo sed -i 's|/opt/media:/data|/mnt/coldstore/media:/data|g' /opt/radarr/docker-compose.yml /opt/sonarr/docker-compose.yml /opt/lidarr/docker-compose.yml /opt/bazarr/docker-compose.yml
+            sudo sed -i 's|/opt/media:/srv|/mnt/coldstore/media:/srv|g' /opt/arrfiles/docker-compose.yml
+            sudo sed -i 's|/opt/media/downloads:/downloads|/mnt/coldstore/downloads:/downloads|g' /opt/qbittorrent/docker-compose.yml /opt/nzbget/docker-compose.yml
+        else
+            echo "No coldstore detected. Keeping default /opt/media paths."
+        fi
+
         # Deploy Stacks
         ${var.enable_portainer ? "cd /opt/portainer && (sudo docker rm -f portainer || true) && retry sudo docker compose up -d" : "echo 'Skipping Portainer'"}
         ${var.enable_plex ? "cd /opt/plex && (sudo docker rm -f plex || true) && retry sudo docker compose up -d" : "echo 'Skipping Plex'"}
@@ -175,6 +253,28 @@ resource "null_resource" "deploy_stacks" {
         ${var.enable_navidrome ? "cd /opt/navidrome && (sudo docker rm -f navidrome || true) && retry sudo docker compose up -d" : "echo 'Skipping Navidrome'"}
         ${var.enable_audiobookshelf ? "cd /opt/audiobookshelf && (sudo docker rm -f audiobookshelf || true) && retry sudo docker compose up -d" : "echo 'Skipping Audiobookshelf'"}
         ${var.enable_nextcloud ? "cd /opt/nextcloud && (sudo docker rm -f nextcloud nextcloud-db nextcloud-redis || true) && retry sudo docker compose up -d" : "echo 'Skipping Nextcloud'"}
+        ${var.enable_nginxproxymanager ? "cd /opt/nginxproxymanager && (sudo docker rm -f nginx-proxy-manager || true) && retry sudo docker compose up -d" : "echo 'Skipping Nginx Proxy Manager'"}
+        ${var.enable_startpage ? "cd /opt/startpage && (sudo docker rm -f startpage || true) && retry sudo docker compose up -d" : "echo 'Skipping Startpage'"}
+        ${var.enable_vaultwarden ? "cd /opt/vaultwarden && (sudo docker rm -f vaultwarden || true) && retry sudo docker compose up -d" : "echo 'Skipping Vaultwarden'"}
+        ${var.enable_hoarder ? "cd /opt/hoarder && (sudo docker rm -f hoarder || true) && retry sudo docker compose up -d" : "echo 'Skipping Hoarder'"}
+        ${var.enable_docmost ? "cd /opt/docmost && (sudo docker rm -f docmost docmost-db || true) && retry sudo docker compose up -d" : "echo 'Skipping Docmost'"}
+        ${var.enable_octoprint ? "cd /opt/octoprint && (sudo docker rm -f octoprint || true) && retry sudo docker compose up -d" : "echo 'Skipping OctoPrint'"}
+        ${var.enable_arrfiles ? "cd /opt/arrfiles && (sudo docker rm -f arrfiles || true) && retry sudo docker compose up -d" : "echo 'Skipping Arrfiles'"}
+        ${var.enable_tautulli ? "cd /opt/tautulli && (sudo docker rm -f tautulli || true) && retry sudo docker compose up -d" : "echo 'Skipping Tautulli'"}
+        ${var.enable_overseerr ? "cd /opt/overseerr && (sudo docker rm -f overseerr || true) && retry sudo docker compose up -d" : "echo 'Skipping Overseerr'"}
+        ${var.enable_radarr ? "cd /opt/radarr && (sudo docker rm -f radarr || true) && retry sudo docker compose up -d" : "echo 'Skipping Radarr'"}
+        ${var.enable_sonarr ? "cd /opt/sonarr && (sudo docker rm -f sonarr || true) && retry sudo docker compose up -d" : "echo 'Skipping Sonarr'"}
+        ${var.enable_lidarr ? "cd /opt/lidarr && (sudo docker rm -f lidarr || true) && retry sudo docker compose up -d" : "echo 'Skipping Lidarr'"}
+        ${var.enable_bazarr ? "cd /opt/bazarr && (sudo docker rm -f bazarr || true) && retry sudo docker compose up -d" : "echo 'Skipping Bazarr'"}
+        ${var.enable_prowlarr ? "cd /opt/prowlarr && (sudo docker rm -f prowlarr || true) && retry sudo docker compose up -d" : "echo 'Skipping Prowlarr'"}
+        ${var.enable_qbittorrent ? "cd /opt/qbittorrent && (sudo docker rm -f qbittorrent || true) && retry sudo docker compose up -d" : "echo 'Skipping qBittorrent'"}
+        ${var.enable_nzbget ? "cd /opt/nzbget && (sudo docker rm -f nzbget || true) && retry sudo docker compose up -d" : "echo 'Skipping NZBGet'"}
+        ${var.enable_homeassistant ? "cd /opt/homeassistant && (sudo docker rm -f homeassistant || true) && retry sudo docker compose up -d" : "echo 'Skipping Home Assistant'"}
+        ${var.enable_zigbee2mqtt ? "cd /opt/zigbee2mqtt && (sudo docker rm -f zigbee2mqtt || true) && retry sudo docker compose up -d" : "echo 'Skipping Zigbee2MQTT'"}
+        ${var.enable_frigate ? "cd /opt/frigate && (sudo docker rm -f frigate || true) && retry sudo docker compose up -d" : "echo 'Skipping Frigate'"}
+        ${var.enable_grafana ? "cd /opt/grafana && (sudo docker rm -f grafana || true) && retry sudo docker compose up -d" : "echo 'Skipping Grafana'"}
+        ${var.enable_influxdb ? "cd /opt/influxdb && (sudo docker rm -f influxdb || true) && retry sudo docker compose up -d" : "echo 'Skipping InfluxDB'"}
+        ${var.enable_prometheus ? "cd /opt/prometheus && (sudo docker rm -f prometheus || true) && retry sudo docker compose up -d" : "echo 'Skipping Prometheus'"}
       REMOTE_SCRIPT
     EOT
   }
