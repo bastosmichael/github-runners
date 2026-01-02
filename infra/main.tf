@@ -328,7 +328,7 @@ resource "null_resource" "deploy_stacks" {
 
         # Pause all containers except Portainer after they have settled
         wait_for_containers_to_settle || true
-        NON_PORTAINER_CONTAINERS=$(sudo docker ps --format '{{.Names}}' | grep -v '^portainer$' || true)
+        NON_PORTAINER_CONTAINERS=$(sudo docker ps --filter "status=running" --format '{{.Names}}' | grep -v '^portainer$' || true)
 
         if [ -n "$NON_PORTAINER_CONTAINERS" ]; then
           echo "Pausing non-Portainer containers: $NON_PORTAINER_CONTAINERS"
