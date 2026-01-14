@@ -6,6 +6,11 @@ if [ -z "${GITHUB_ORG_URL:-}" ] || [ -z "${GITHUB_TOKEN:-}" ]; then
   exit 1
 fi
 
+if [[ ! "${GITHUB_ORG_URL}" =~ ^https?://[^/]+/[^/]+(/[^/]+)?/?$ ]]; then
+  echo "GITHUB_ORG_URL must include an organization or repository path (e.g., https://github.com/my-org or https://github.com/my-org/my-repo)."
+  exit 1
+fi
+
 RUNNER_VERSION="${RUNNER_VERSION:-2.323.0}"
 RUNNER_LABELS="${RUNNER_LABELS:-docker,ubuntu-22.04}"
 RUNNER_NAME_PREFIX="${RUNNER_NAME_PREFIX:-github-runner}"
