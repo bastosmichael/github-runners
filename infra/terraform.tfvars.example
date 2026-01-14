@@ -3,35 +3,19 @@
 
 # Docker daemon connection
 # docker_host = "unix:///var/run/docker.sock"
-# docker_host = "tcp://192.168.1.100:2375"
+# docker_host = "ssh://michael@192.168.1.100"
+
+# SSH user for remote hosts
+# ssh_user = "michael"
 
 # Enable/disable stacks
 enable_portainer = true
-enable_plex      = false
-enable_jellyfin  = false
-enable_immich    = false
-enable_navidrome = false
-enable_audiobookshelf = false
-enable_nextcloud = false
-enable_nginxproxymanager = false
-enable_startpage = false
-enable_vaultwarden = false
-enable_hoarder = false
-enable_docmost = false
-enable_octoprint = false
-enable_arrfiles = false
-enable_tautulli = false
-enable_overseerr = false
-enable_radarr = false
-enable_sonarr = false
-enable_lidarr = false
-enable_bazarr = false
-enable_prowlarr = false
-enable_qbittorrent = false
-enable_nzbget = false
-enable_homeassistant = false
-enable_zigbee2mqtt = false
-enable_frigate = false
-enable_grafana = false
-enable_influxdb = false
-enable_prometheus = false
+enable_github_runners = true
+
+# GitHub Actions runner settings
+# github_runner_org_url = "https://github.com/your-org"
+# github_runner_token = "YOUR_REGISTRATION_TOKEN"
+# github_runner_count = 2
+# github_runner_labels = "docker,ubuntu-22.04"
+# github_runner_name_prefix = "github-runner"
+# github_runner_version = "2.323.0"

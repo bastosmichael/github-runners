@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  github-runner:
+    build:
+      context: .
+    restart: unless-stopped
+    environment:
+      GITHUB_ORG_URL: ${GITHUB_ORG_URL}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      RUNNER_LABELS: ${RUNNER_LABELS:-docker,ubuntu-22.04}
+      RUNNER_NAME_PREFIX: ${RUNNER_NAME_PREFIX:-github-runner}
+      RUNNER_VERSION: ${RUNNER_VERSION:-2.323.0}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
