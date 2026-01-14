@@ -4,176 +4,57 @@ variable "docker_host" {
   default     = "unix:///var/run/docker.sock"
 }
 
+variable "ssh_user" {
+  description = "SSH user for remote Docker host"
+  type        = string
+  default     = "michael"
+}
+
 variable "enable_portainer" {
   description = "Enable Portainer stack deployment"
   type        = bool
   default     = true
 }
 
-variable "enable_plex" {
-  description = "Enable Plex stack deployment"
+variable "enable_github_runners" {
+  description = "Enable GitHub Actions runner stack deployment"
   type        = bool
-  default     = false
+  default     = true
 }
 
-variable "enable_jellyfin" {
-  description = "Enable Jellyfin stack deployment"
-  type        = bool
-  default     = false
+variable "github_runner_org_url" {
+  description = "GitHub organization URL (e.g., https://github.com/my-org)"
+  type        = string
+  default     = ""
 }
 
-variable "enable_immich" {
-  description = "Enable Immich stack deployment"
-  type        = bool
-  default     = false
+variable "github_runner_token" {
+  description = "GitHub Actions runner registration token"
+  type        = string
+  default     = ""
+  sensitive   = true
 }
 
-variable "enable_navidrome" {
-  description = "Enable Navidrome stack deployment"
-  type        = bool
-  default     = false
+variable "github_runner_count" {
+  description = "Number of GitHub Actions runner containers to deploy"
+  type        = number
+  default     = 1
 }
 
-variable "enable_audiobookshelf" {
-  description = "Enable Audiobookshelf stack deployment"
-  type        = bool
-  default     = false
+variable "github_runner_labels" {
+  description = "Comma-separated labels for the runner"
+  type        = string
+  default     = "docker,ubuntu-22.04"
 }
 
-variable "enable_nextcloud" {
-  description = "Enable Nextcloud stack deployment"
-  type        = bool
-  default     = false
+variable "github_runner_name_prefix" {
+  description = "Prefix for runner names"
+  type        = string
+  default     = "github-runner"
 }
 
-variable "enable_nginxproxymanager" {
-  description = "Enable Nginx Proxy Manager stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_startpage" {
-  description = "Enable Startpage/Homepage stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_vaultwarden" {
-  description = "Enable Vaultwarden stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_hoarder" {
-  description = "Enable Hoarder stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_docmost" {
-  description = "Enable Docmost stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_octoprint" {
-  description = "Enable OctoPrint stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_arrfiles" {
-  description = "Enable Arrfiles/File Browser stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_tautulli" {
-  description = "Enable Tautulli stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_overseerr" {
-  description = "Enable Overseerr stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_radarr" {
-  description = "Enable Radarr stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_sonarr" {
-  description = "Enable Sonarr stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_lidarr" {
-  description = "Enable Lidarr stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_bazarr" {
-  description = "Enable Bazarr stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_prowlarr" {
-  description = "Enable Prowlarr stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_qbittorrent" {
-  description = "Enable qBittorrent stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_nzbget" {
-  description = "Enable NZBGet stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_homeassistant" {
-  description = "Enable Home Assistant stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_zigbee2mqtt" {
-  description = "Enable Zigbee2MQTT stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_frigate" {
-  description = "Enable Frigate NVR stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_grafana" {
-  description = "Enable Grafana stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_influxdb" {
-  description = "Enable InfluxDB stack deployment"
-  type        = bool
-  default     = false
-}
-
-variable "enable_prometheus" {
-  description = "Enable Prometheus stack deployment"
-  type        = bool
-  default     = false
+variable "github_runner_version" {
+  description = "GitHub Actions runner version to install"
+  type        = string
+  default     = "2.323.0"
 }
