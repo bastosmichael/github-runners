@@ -17,7 +17,7 @@ infra/            # Terraform configuration
 ## Prerequisites
 - You must be an organization owner or have appropriate permissions to manage runners at the organization level.
 - You need a server/VM with Docker installed.
-- You will generate a Personal Access Token (PAT) or use a time-limited token from the GitHub UI for authentication.
+- You will generate a time-limited **runner registration token** from the GitHub UI (or via the REST API) for authentication.
 
 ## Step-by-Step Guide
 ### 1. Add the Runner to Your GitHub Organization
@@ -25,7 +25,7 @@ infra/            # Terraform configuration
 2. In the left sidebar, click **Actions**, then click **Runners**.
 3. Click **New self-hosted runner**.
 4. Select the operating system (Linux) and architecture (x64).
-5. Copy the time-limited token shown in the configuration command; you will use it in Terraform.
+5. Copy the time-limited **runner registration token** shown in the configuration command; you will use it in Terraform.
 
 > **Important:** A single runner instance can only be registered to one scope (repository, organization, or enterprise) at a time. To share a runner across multiple repositories, register it at the organization level.
 
@@ -45,7 +45,7 @@ terraform apply \
   -var="github_runner_count=1"
 ```
 
-**Note:** replace `192.168.86.42` with your actual server IP.
+**Note:** replace `192.168.86.42` with your actual server IP. Ensure `github_runner_org_url` includes an organization or repository path (for example, `https://github.com/your-org` or `https://github.com/your-org/your-repo`), not just `https://github.com`.
 
 ### 3. Verify and Use
 - Verify the runner is online: **Organization Settings → Actions → Runners**. Your new runner should be listed and show a green status icon (Idle).
