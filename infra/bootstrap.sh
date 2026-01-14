@@ -1,5 +1,5 @@
 #!/bin/bash
-HOST="192.168.86.38"
+HOST="192.168.86.42"
 USER="michael"
 
 echo "Bootstrapping Docker on $USER@$HOST..."

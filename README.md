@@ -36,7 +36,7 @@ Terraform copies a Dockerfile and start script to your server, builds the image,
 cd infra
 terraform init
 terraform apply \
-  -var="docker_host=ssh://michael@192.168.86.38" \
+  -var="docker_host=ssh://michael@192.168.86.42" \
   -var="ssh_user=michael" \
   -var="enable_portainer=true" \
   -var="enable_github_runners=true" \
@@ -45,7 +45,7 @@ terraform apply \
   -var="github_runner_count=1"
 ```
 
-**Note:** replace `192.168.86.38` with your actual server IP.
+**Note:** replace `192.168.86.42` with your actual server IP.
 
 ### 3. Verify and Use
 - Verify the runner is online: **Organization Settings → Actions → Runners**. Your new runner should be listed and show a green status icon (Idle).
@@ -75,5 +75,5 @@ Before running Terraform, ensure:
 To check the logs of the GitHub runner containers, SSH into the server and run:
 
 ```bash
-ssh michael@192.168.86.38 "sudo docker compose -f /opt/github-runner/docker-compose.yml logs -f"
+ssh michael@192.168.86.42 "sudo docker compose -f /opt/github-runner/docker-compose.yml logs -f"
 ```
