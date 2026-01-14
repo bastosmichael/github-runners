@@ -49,17 +49,21 @@ resource "null_resource" "deploy_stacks" {
   depends_on = [null_resource.bootstrap_docker]
 
   triggers = {
-    docker_host                  = var.docker_host
-    enable_portainer             = var.enable_portainer
-    enable_github_runners        = var.enable_github_runners
-    github_runner_count          = var.github_runner_count
-    github_runner_org_url        = var.github_runner_org_url
-    github_runner_token          = var.github_runner_token
-    github_runner_labels         = var.github_runner_labels
-    github_runner_name_prefix    = var.github_runner_name_prefix
-    github_runner_version        = var.github_runner_version
-    portainer_compose_hash       = filesha256("${path.module}/stacks/portainer/docker-compose.yml")
-    github_runner_compose_hash   = filesha256("${path.module}/stacks/github-runner/docker-compose.yml")
+    docker_host = var.docker_host
+
+    enable_portainer      = var.enable_portainer
+    enable_github_runners = var.enable_github_runners
+
+    github_runner_count       = var.github_runner_count
+    github_runner_org_url     = var.github_runner_org_url
+    github_runner_token       = var.github_runner_token
+    github_runner_labels      = var.github_runner_labels
+    github_runner_name_prefix = var.github_runner_name_prefix
+    github_runner_version     = var.github_runner_version
+
+    portainer_compose_hash = filesha256("${path.module}/stacks/portainer/docker-compose.yml")
+
+    github_runner_compose_hash    = filesha256("${path.module}/stacks/github-runner/docker-compose.yml")
     github_runner_dockerfile_hash = filesha256("${path.module}/stacks/github-runner/Dockerfile")
     github_runner_start_hash      = filesha256("${path.module}/stacks/github-runner/start.sh")
   }
