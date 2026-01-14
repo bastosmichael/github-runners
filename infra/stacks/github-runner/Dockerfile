@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends curl tar jq sudo git ca-certificates libicu-dev \
+  && apt-get install -y --no-install-recommends curl tar jq sudo git ca-certificates libicu-dev gh \
   && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -m githubrunner
