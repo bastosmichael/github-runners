@@ -9,6 +9,7 @@ WORKDIR /home/githubrunner/actions-runner
 
 COPY start.sh .
 RUN chmod +x start.sh
+RUN chown -R githubrunner:githubrunner /home/githubrunner/actions-runner
 
 USER githubrunner
 
