@@ -38,6 +38,8 @@ terraform init
 terraform apply \
   -var="docker_host=ssh://michael@192.168.86.42" \
   -var="ssh_user=michael" \
+  -var="docker_default_address_pool_base=172.20.0.0/16" \
+  -var="docker_default_address_pool_size=24" \
   -var="enable_portainer=true" \
   -var="enable_github_runners=true" \
   -var="github_runner_org_url=https://github.com/your-org" \
@@ -46,6 +48,8 @@ terraform apply \
 ```
 
 **Note:** replace `192.168.86.42` with your actual server IP. Ensure `github_runner_org_url` includes an organization or repository path (for example, `https://github.com/your-org` or `https://github.com/your-org/your-repo`), not just `https://github.com`.
+
+If your runner needs to reach local services on ranges like `192.168.86.x`, keep Docker bridge networks on a non-overlapping CIDR (for example `172.20.0.0/16`) via `docker_default_address_pool_base`. Overlapping routes can make containers prefer Docker bridge routes instead of your LAN routes.
 
 ### 3. Verify and Use
 - Verify the runner is online: **Organization Settings → Actions → Runners**. Your new runner should be listed and show a green status icon (Idle).

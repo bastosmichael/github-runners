@@ -8,6 +8,10 @@
 # SSH user for remote hosts
 # ssh_user = "michael"
 
+# Docker bridge address pools (change if 10.0.0.0/8 conflicts with your LAN/VPN routes)
+# docker_default_address_pool_base = "172.20.0.0/16"
+# docker_default_address_pool_size = 24
+
 # Enable/disable stacks
 enable_portainer = true
 enable_github_runners = true

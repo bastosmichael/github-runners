@@ -13,8 +13,10 @@ provider "null" {}
 
 resource "null_resource" "bootstrap_docker" {
   triggers = {
-    docker_host   = var.docker_host
-    daemon_config = "v1"
+    docker_host                      = var.docker_host
+    docker_default_address_pool_base = var.docker_default_address_pool_base
+    docker_default_address_pool_size = var.docker_default_address_pool_size
+    daemon_config                    = "v2"
   }
 
   provisioner "local-exec" {
@@ -28,14 +30,14 @@ resource "null_resource" "bootstrap_docker" {
 
       if [ "$USE_SSH" = "true" ]; then
         ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$USER@$HOST" 'bash -s' <<'REMOTE_SCRIPT'
-          echo '{"default-address-pools":[{"base":"10.0.0.0/8","size":24}]}' | sudo tee /etc/docker/daemon.json > /dev/null
+          echo '{"default-address-pools":[{"base":"${var.docker_default_address_pool_base}","size":${var.docker_default_address_pool_size}}]}' | sudo tee /etc/docker/daemon.json > /dev/null
           sudo systemctl restart docker
 
           sudo mkdir -p /opt/portainer /opt/github-runner
           sudo chown -R 1000:1000 /opt/portainer /opt/github-runner || true
 REMOTE_SCRIPT
       else
-        echo '{"default-address-pools":[{"base":"10.0.0.0/8","size":24}]}' | sudo tee /etc/docker/daemon.json > /dev/null
+        echo '{"default-address-pools":[{"base":"${var.docker_default_address_pool_base}","size":${var.docker_default_address_pool_size}}]}' | sudo tee /etc/docker/daemon.json > /dev/null
         sudo systemctl restart docker
 
         sudo mkdir -p /opt/portainer /opt/github-runner

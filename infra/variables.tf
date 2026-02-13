@@ -10,6 +10,18 @@ variable "ssh_user" {
   default     = "michael"
 }
 
+variable "docker_default_address_pool_base" {
+  description = "Base CIDR for Docker bridge networks (must not overlap with your LAN/VPN routes)"
+  type        = string
+  default     = "10.0.0.0/8"
+}
+
+variable "docker_default_address_pool_size" {
+  description = "Subnet size allocated by Docker from the default address pool"
+  type        = number
+  default     = 24
+}
+
 variable "enable_portainer" {
   description = "Enable Portainer stack deployment"
   type        = bool
